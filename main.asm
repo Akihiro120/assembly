@@ -8,7 +8,7 @@ _start:
 	rax, 1
 	rdi, 1
 	rsi, text
-	rdx, 16
+	rdx, 24
 	syscall
 
 	rax, 60
