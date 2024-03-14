@@ -16,24 +16,50 @@ _start:
 	syscall
 
 _printInteger:
-	mov byte [number], 0x0A
+	mov rcx, number
+	mov rbx, 10
+	mov [rcx], rbx
+	inc rcx
+	mov[number_pos], rcx
 
-	call _printInteger
+	call _printIntegerLoop
+
+	ret
 
 _printIntegerLoop:
 	mov rdx, 0
-	mov rdi, 10
-	div rdi
+	mov rbx, 10
+	div rbx
 	push rax
+	add rdx, 48
+
+	mov rcx, [number_pos]
+	mov [rcx], dl
+	inc rcx
+	mov [number_pos], rcx
+
+	pop rax
+	cmp rax, 0
+	jne _printIntegerLoop
+
+	call _printIntegerLoop2
+
+	ret
+	
+_printIntegerLoop2:
+	mov rcx, [number_pos]
 
 	mov rax, 1
 	mov rdi, 1
-	mov [rsi], dl
-	mov rdx, 8
+	mov rsi, rcx
+	mov rdx, 1
+	syscall
 
-	pop rdi
-	mov rsi, 0
-	cmp rdi, rsi
-	jnle _printIntegerLoop
+	mov rcx, [number_pos]
+	dec rcx
+	mov [number_pos], rcx
+
+	cmp rcx, number
+	jge _printIntegerLoop2
 
 	ret
