@@ -2,12 +2,13 @@ extern printf
 
 global main
 section .data
-	printf_format: db '%x', 10, 0
+	printf_format: db '%s', 10, 0
+	text db "Hello World"
 
 section .text
 main:
 	mov rdi, printf_format
-	mov rsi, 0x92837
+	mov rsi, text
 	xor rax, rax
 	call printf WRT ..plt
 
