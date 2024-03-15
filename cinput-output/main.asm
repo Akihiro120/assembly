@@ -2,8 +2,8 @@ extern printf
 extern scanf
 
 section .data
-	print_format: db "%d", 10, 0
-	format: db "%c", 0
+	print_format: db "%i", 0x0A, 0
+	scan_format: db "%i", 0
 
 section .bss
 	number: resb 8
@@ -19,10 +19,10 @@ main:
 	; scanf
 	; rdi, format parameter
 	; rsi, address to the value
-	; rax, additional parameters
-	mov rdi, format	
+	; rax, output
+	mov rdi, scan_format	
 	mov rsi, number
-	mov rax, 0
+	xor rax, rax
 	call scanf
 
 	; printf
@@ -34,7 +34,10 @@ main:
 	xor rax, rax
 	call printf
 
-	leave
+	; deallocate stack and return base pointer
+	mov rsp, rbp
+	pop rbp
+	
 	mov rax, 60
 	mov rdi, 0
 	syscall
