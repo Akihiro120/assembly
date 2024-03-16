@@ -144,6 +144,8 @@ To call printf we have to fill out its parameters, RDI, RSI, and RAX are the equ
 | xor rax, rax | we use the xor instruction to ensure we get 0 outputs as we do not need them, we can also use: mov rax, 0, but in this case if rax returns either 1, or 0, a 0 will be output into the rax register due to the XOR operation
 | call printf 
 
+when printing strings, ensure that we pass it as the address directly, unlike integer variables strings are required to be called to by its address when using with printf
+
 #
 To call the scanf function we can use the same calling convention
 
