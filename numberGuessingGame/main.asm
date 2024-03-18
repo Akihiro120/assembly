@@ -13,7 +13,7 @@ section .data
 	win_message: db "You got the number right!!!", 10, 0
 
     ; message
-    message_range: db "Enter a Range Limit: ", 0
+    range_message: db "Enter a Range Limit: ", 0
 
 section .bss
     seed: resq 1
@@ -46,7 +46,7 @@ main:
     mov [random_number], rax
 
     ; display range message
-    mov rdi, message_range
+    mov rdi, range_message
     mov rsi, 0
     call printf
     xor rax, rax
