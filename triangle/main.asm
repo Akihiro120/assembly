@@ -26,6 +26,7 @@ main:
 	push rbp
 	mov rbp, rsp
 
+	; draw the triangle
 	call _getRows
 	call _rowsLoop
 
@@ -78,10 +79,12 @@ _rowsLoop:
 	mov [star_loop_index], rdi
 	call _starLoop
 
+	; decrement counter
 	mov rdi, [counter]
 	dec rdi
 	mov [counter], rdi
 
+	; add new line
 	mov rdi, new_line
 	mov rsi, 0
 	call printf
@@ -94,10 +97,12 @@ _rowsLoop:
 	mov rsp, rbp
 	pop rbp
 
+	; increment loop index
 	mov rdi, [row_loop_index]
 	inc rdi
 	mov [row_loop_index], rdi
 
+	; check if loop is fulfilled
 	mov rdi, [row_loop_index]
 	mov rsi, [num_rows]
 	cmp rdi, rsi
@@ -108,7 +113,8 @@ _rowsLoop:
 _emptySpaceLoop:
 	push rbp
 	mov rbp, rsp
-
+	
+	; print space
 	mov rdi, empty_text
 	mov rsi, 0
 	call printf
@@ -121,10 +127,12 @@ _emptySpaceLoop:
 	mov rsp, rbp
 	pop rbp
 
+	; increment loop index
 	mov rdi, [space_loop_index]
 	inc rdi
 	mov [space_loop_index], rdi
 
+	; check if loop is fulfilled
 	mov rdi, [space_loop_index]
 	mov rsi, [counter]
 	cmp rdi, rsi
@@ -133,11 +141,13 @@ _emptySpaceLoop:
 	ret
 
 _starLoop:
+	; modulo for even check
 	xor rdx, rdx
 	mov rax, [star_loop_index]
 	mov rdi, 2
 	div rdi
-
+	
+	; if even print star, if odd print space
 	mov rdi, 1
 	cmp rdx, rdi
 	je _printStar
@@ -146,12 +156,14 @@ _starLoop:
 _printStar:
 	push rbp
 	mov rbp, rsp
-
+	
+	; print star
 	mov rdi, star_text
 	mov rsi, 0
 	call printf
 	xor rax, rax
 
+	; flush
 	mov rdi, 0
 	call fflush
 
@@ -164,11 +176,13 @@ _printSpace:
 	push rbp
 	mov rbp, rsp
 
+	; print empty
 	mov rdi, empty_text
 	mov rsi, 0
 	call printf
 	xor rax, rax
 
+	; flush
 	mov rdi, 0
 	call fflush
 
@@ -178,16 +192,19 @@ _printSpace:
 	jmp _endIf
 
 _endIf:
+	; setup loop condition
 	mov rdi, [row_loop_index]
 	mov rsi, 2
 	add rdi, rdi
 	add rdi, rsi
 	mov [star_counter], rdi
 
+	; increment loop index
 	mov rdi, [star_loop_index]
 	inc rdi
 	mov [star_loop_index], rdi
-
+	
+	; check if loop is fulfilled
 	mov rdi, [star_loop_index]
 	mov rsi, [star_counter]
 	cmp rdi, rsi
